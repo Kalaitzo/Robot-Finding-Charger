@@ -15,33 +15,33 @@ for i = 1:5
    else%Take the robot to the charger
        disp(workspace);
        figure;
-       heatmap(workspace);
-       while initial_pos(i)<3%Robot goes down
-           workspace(initial_pos(i),initial_pos(j)) = 0.5; %The robot leaves its previous position
-           initial_pos(i)=initial_pos(i)+1;
-           workspace(initial_pos(i),initial_pos(j)) = 2;
-           %disp(workspace);
-           heatmap(workspace);
-       end
-       while initial_pos(i)>3%Robot goes up
-           workspace(initial_pos(i),initial_pos(j)) = 0.5; %The robot leaves its previous position
-           initial_pos(i)=initial_pos(i)-1;
-           workspace(initial_pos(i),initial_pos(j)) = 2;
-           %disp(workspace);
-           heatmap(workspace);
-       end
-       while initial_pos(j)<9%Robot goes right
-           workspace(initial_pos(i),initial_pos(j)) = 0.5; %The robot leaves its previous position
-           initial_pos(j)=initial_pos(j)+1;
-           workspace(initial_pos(i),initial_pos(j)) = 2;
-           %disp(workspace);
-           heatmap(workspace);
-       end
-       while initial_pos(j)>9%Robot goes left
-           workspace(initial_pos(i),initial_pos(j)) = 0.5; %The robot leaves its previous position
-           initial_pos(j)=initial_pos(j)-1;
-           workspace(initial_pos(i),initial_pos(j)) = 2;
-           %disp(workspace);
+       start = [initial_pos(i) initial_pos(j)];
+       while (initial_pos(i)~=3)||(initial_pos(j)~=9)
+           while initial_pos(i)<3%Robot goes down
+               workspace(initial_pos(i),initial_pos(j)) = 0.5; %The robot leaves its previous position
+               initial_pos(i)=initial_pos(i)+1;
+               workspace(initial_pos(i),initial_pos(j)) = 2;
+               disp(workspace);
+           end
+           while initial_pos(i)>3%Robot goes up
+               workspace(initial_pos(i),initial_pos(j)) = 0.5; %The robot leaves its previous position
+               initial_pos(i)=initial_pos(i)-1;
+               workspace(initial_pos(i),initial_pos(j)) = 2;
+               disp(workspace);
+           end
+           while initial_pos(j)<9%Robot goes right
+               workspace(initial_pos(i),initial_pos(j)) = 0.5; %The robot leaves its previous position
+               initial_pos(j)=initial_pos(j)+1;
+               workspace(initial_pos(i),initial_pos(j)) = 2;
+               disp(workspace);
+           end
+           while initial_pos(j)>9%Robot goes left
+               workspace(initial_pos(i),initial_pos(j)) = 0.5; %The robot leaves its previous position
+               initial_pos(j)=initial_pos(j)-1;
+               workspace(initial_pos(i),initial_pos(j)) = 2;
+               disp(workspace);
+           end
+           workspace(start(1), start(2)) = 5;
            heatmap(workspace);
        end
        disp("The robot reached the charger!")
