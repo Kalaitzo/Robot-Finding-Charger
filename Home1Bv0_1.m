@@ -30,14 +30,15 @@ for i = 1:5
     end
     figure;
     %Apply the algorithm to go to the charger
+    start = [initial_pos(i) initial_pos(j)];
     while (initial_pos(i)~=3)||(initial_pos(j)~=9)
+        disp(workspace);
         while initial_pos(i)>3%Go UP
             if (workspace(initial_pos(i)-1,initial_pos(j)) ~= 3)%If there isn't an obstacle forward
                 workspace(initial_pos(i),initial_pos(j)) = 0.5; %The robot leaves its previous position
                 initial_pos(i)=initial_pos(i)-1;%The forward position
                 workspace(initial_pos(i),initial_pos(j)) = 2;%Goes UP
                 disp(workspace);
-                heatmap(workspace);
             else%Dodge the obstacle in front of you
                 if (initial_pos(j)>1)&&(workspace(initial_pos(i),initial_pos(j)-1) ~= 3)%No obstacle to the left
                     while (workspace(initial_pos(i)-1,initial_pos(j)) == 3)&&(initial_pos(j)>1)&&(workspace(initial_pos(i),initial_pos(j)-1) ~= 3)%Obstacle in front of you
@@ -45,7 +46,6 @@ for i = 1:5
                         initial_pos(j)=initial_pos(j)-1;%The left position
                         workspace(initial_pos(i),initial_pos(j)) = 2;%Goes LEFT
                         disp(workspace);
-                        heatmap(workspace);
                     end
                 elseif (initial_pos(j)<20)&&(workspace(initial_pos(i),initial_pos(j)+1) ~= 3)%No obstacle to the right
                     while (workspace(initial_pos(i)-1,initial_pos(j)) == 3)&&(initial_pos(j)<20)&&(workspace(initial_pos(i),initial_pos(j)+1) ~= 3)
@@ -53,7 +53,6 @@ for i = 1:5
                         initial_pos(j)=initial_pos(j)+1;%The right position
                         workspace(initial_pos(i),initial_pos(j)) = 2;%Goes RIGHT
                         disp(workspace);
-                        heatmap(workspace);
                     end
                 elseif (initial_pos(i)<20)&&(workspace(initial_pos(i)+1,initial_pos(j)) ~= 3)%No obstacle only behind the robot
                     workspace(initial_pos(i),initial_pos(j)) = 0.5;
@@ -66,7 +65,6 @@ for i = 1:5
                     initial_pos(j)=initial_pos(j)-1;%The left position
                     workspace(initial_pos(i),initial_pos(j)) = 2;%Goes LEFT
                     disp(workspace);
-                    heatmap(workspace);
                 end
             end
         end
@@ -76,7 +74,6 @@ for i = 1:5
                 initial_pos(i)=initial_pos(i)+1;%The position behind
                 workspace(initial_pos(i),initial_pos(j)) = 2;%Goes BACK
                 disp(workspace);
-                heatmap(workspace);
             else%Dodge the obstacle
                 if (initial_pos(j)>1)&&(workspace(initial_pos(i),initial_pos(j)-1) ~= 3)%No obstacle to the left
                     while (workspace(initial_pos(i)+1,initial_pos(j)) == 3)&&(initial_pos(j)>1)&&(workspace(initial_pos(i),initial_pos(j)-1) ~= 3)
@@ -84,7 +81,6 @@ for i = 1:5
                         initial_pos(j)=initial_pos(j)-1;%The left position
                         workspace(initial_pos(i),initial_pos(j)) = 2;%Goes LEFT
                         disp(workspace);
-                        heatmap(workspace);
                     end
                 elseif (initial_pos(j)<20)&&(workspace(initial_pos(i),initial_pos(j)+1) ~= 3)%No obstacle to the right
                     while (workspace(initial_pos(i)+1,initial_pos(j)) == 3)&&(initial_pos(j)<20)&&(workspace(initial_pos(i),initial_pos(j)+1) ~= 3)
@@ -92,9 +88,8 @@ for i = 1:5
                         initial_pos(j)=initial_pos(j)+1;%The right position
                         workspace(initial_pos(i),initial_pos(j)) = 2;%Goes RIGHT
                         disp(workspace);
-                        heatmap(workspace);
                     end
-                else
+                else%No obstacle in front of the robot
                     workspace(initial_pos(i),initial_pos(j)) = 0.5;
                     while (initial_pos(j)>1)&&(workspace(initial_pos(i),initial_pos(j)-1) == 3)
                         workspace(initial_pos(i),initial_pos(j)) = 0.5; %The robot leaves its previous position
@@ -105,7 +100,6 @@ for i = 1:5
                     initial_pos(j)=initial_pos(j)-1;%The left position
                     workspace(initial_pos(i),initial_pos(j)) = 2;%Goes LEFT
                     disp(workspace);
-                    heatmap(workspace);
                 end
             end
         end
@@ -115,7 +109,6 @@ for i = 1:5
                 initial_pos(j)=initial_pos(j)-1;%The left position
                 workspace(initial_pos(i),initial_pos(j)) = 2;%Goes LEFT
                 disp(workspace);
-                heatmap(workspace);
             else%Dodge the obstacle
                 if (initial_pos(i)<20)&&(workspace(initial_pos(i)+1,initial_pos(j)) ~= 3)%No obstacle behind
                     while(workspace(initial_pos(i),initial_pos(j)-1) == 3)&&(initial_pos(i)<20)&&(workspace(initial_pos(i)+1,initial_pos(j)) ~= 3)
@@ -123,17 +116,15 @@ for i = 1:5
                         initial_pos(i)=initial_pos(i)+1;%The position behind
                         workspace(initial_pos(i),initial_pos(j)) = 2;%Goes BACK
                         disp(workspace);
-                        heatmap(workspace);
                     end
-                elseif (initial_pos(i)>1)&&(workspace(initial_pos(i)-1,initial_pos(j)) ~= 3)%No ostacle forward
+                elseif (initial_pos(i)>1)&&(workspace(initial_pos(i)-1,initial_pos(j)) ~= 3)%No obstacle forward
                     while(workspace(initial_pos(i),initial_pos(j)-1) == 3)&&(initial_pos(i)>1)&&(workspace(initial_pos(i)-1,initial_pos(j)) ~= 3)
                         workspace(initial_pos(i),initial_pos(j)) = 0.5; %The robot leaves its previous position
                         initial_pos(i)=initial_pos(i)-1;%The forward position
                         workspace(initial_pos(i),initial_pos(j)) = 2;%Goes UP
                         disp(workspace);
-                        heatmap(workspace);
                     end
-                else
+                else%No obstacle only to the right
                     workspace(initial_pos(i),initial_pos(j)) = 0.5;
                     while(initial_pos(i)<20)&&(workspace(initial_pos(i)+1,initial_pos(j)) == 3)
                         workspace(initial_pos(i),initial_pos(j)) = 0.5;
@@ -144,7 +135,6 @@ for i = 1:5
                     initial_pos(i)=initial_pos(i)+1;%The position behind
                     workspace(initial_pos(i),initial_pos(j)) = 2;%Goes BACK
                     disp(workspace);
-                    heatmap(workspace);
                 end
             end
         end
@@ -154,7 +144,6 @@ for i = 1:5
                 initial_pos(j)=initial_pos(j)+1;%The right position
                 workspace(initial_pos(i),initial_pos(j)) = 2;%Goes RIGHT
                 disp(workspace);
-                heatmap(workspace);
             else%Dodge the obstacle
                 if (initial_pos(i)<20)&&(workspace(initial_pos(i)+1,initial_pos(j)) ~= 3)%No obstacle behind
                     while (workspace(initial_pos(i),initial_pos(j)+1) == 3)&&(initial_pos(i)<20)&&(workspace(initial_pos(i)+1,initial_pos(j)) ~= 3)
@@ -162,7 +151,6 @@ for i = 1:5
                         initial_pos(i)=initial_pos(i)+1;%The position behind
                         workspace(initial_pos(i),initial_pos(j)) = 2;%Goes BACK
                         disp(workspace);
-                        heatmap(workspace);
                     end
                 elseif (initial_pos(i)>1)&&(workspace(initial_pos(i)-1,initial_pos(j)) ~= 3)%No obstacle forward
                     while (workspace(initial_pos(i),initial_pos(j)+1) == 3)&&(initial_pos(i)>1)&&(workspace(initial_pos(i)-1,initial_pos(j)) ~= 3)
@@ -170,9 +158,8 @@ for i = 1:5
                         initial_pos(i)=initial_pos(i)-1;%The forward position
                         workspace(initial_pos(i),initial_pos(j)) = 2;%Goes UP
                         disp(workspace);
-                        heatmap(workspace);
                     end
-                else
+                else%No obstacle only to the left
                     workspace(initial_pos(i),initial_pos(j)) = 0.5;
                     while (initial_pos(i)<20)&&(workspace(initial_pos(i)+1,initial_pos(j)) == 3)
                         workspace(initial_pos(i),initial_pos(j)) = 0.5; %The robot leaves its previous position
@@ -183,10 +170,11 @@ for i = 1:5
                     initial_pos(i)=initial_pos(i)+1;%The position behind
                     workspace(initial_pos(i),initial_pos(j)) = 2;%Goes BACK
                     disp(workspace);
-                    heatmap(workspace);
                 end
             end
         end
+        workspace(start(1), start(2))= 5;
+        heatmap(workspace);
     end
     disp("The robot reached the charger!");
 end
